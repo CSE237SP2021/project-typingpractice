@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_project-typingpractice" default="compile.module.project-typingpractice">
+  <dirname property="module.project-typingpractice.basedir" file="${ant.file.module_project-typingpractice}"/>
+  
+  <property name="module.jdk.home.project-typingpractice" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.project-typingpractice" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.project-typingpractice" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.project-typingpractice" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="project-typingpractice.output.dir" value="${module.project-typingpractice.basedir}/../out/production/project-typingpractice"/>
+  <property name="project-typingpractice.testoutput.dir" value="${module.project-typingpractice.basedir}/../out/test/project-typingpractice"/>
+  
+  <path id="project-typingpractice.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="project-typingpractice.module.production.classpath">
+    <path refid="${module.jdk.classpath.project-typingpractice}"/>
+  </path>
+  
+  <path id="project-typingpractice.runtime.production.module.classpath">
+    <pathelement location="${project-typingpractice.output.dir}"/>
+  </path>
+  
+  <path id="project-typingpractice.module.classpath">
+    <path refid="${module.jdk.classpath.project-typingpractice}"/>
+    <pathelement location="${project-typingpractice.output.dir}"/>
+  </path>
+  
+  <path id="project-typingpractice.runtime.module.classpath">
+    <pathelement location="${project-typingpractice.testoutput.dir}"/>
+    <pathelement location="${project-typingpractice.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.project-typingpractice">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.project-typingpractice">
+    <patternset refid="excluded.from.module.project-typingpractice"/>
+  </patternset>
+  
+  <path id="project-typingpractice.module.sourcepath">
+    <dirset dir="${module.project-typingpractice.basedir}/../../project-typingpractice">
+      <include name="src"/>
+      <include name="src/TypingPractice"/>
+    </dirset>
+  </path>
+  
+  <path id="project-typingpractice.module.test.sourcepath">
+    <dirset dir="${module.project-typingpractice.basedir}/../../project-typingpractice">
+      <include name="src/tests"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.project-typingpractice" depends="compile.module.project-typingpractice.production,compile.module.project-typingpractice.tests" description="Compile module project-typingpractice"/>
+  
+  <target name="compile.module.project-typingpractice.production" depends="register.custom.compilers" description="Compile module project-typingpractice; production classes">
+    <mkdir dir="${project-typingpractice.output.dir}"/>
+    <javac2 destdir="${project-typingpractice.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.project-typingpractice}/javac">
+      <compilerarg line="${compiler.args.project-typingpractice}"/>
+      <bootclasspath refid="project-typingpractice.module.bootclasspath"/>
+      <classpath refid="project-typingpractice.module.production.classpath"/>
+      <src refid="project-typingpractice.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.project-typingpractice"/>
+    </javac2>
+    
+    <copy todir="${project-typingpractice.output.dir}">
+      <fileset dir="${module.project-typingpractice.basedir}/../src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.project-typingpractice.basedir}/../src/TypingPractice">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.project-typingpractice.tests" depends="register.custom.compilers,compile.module.project-typingpractice.production" description="compile module project-typingpractice; test classes" unless="skip.tests">
+    <mkdir dir="${project-typingpractice.testoutput.dir}"/>
+    <javac2 destdir="${project-typingpractice.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.project-typingpractice}/javac">
+      <compilerarg line="${compiler.args.project-typingpractice}"/>
+      <bootclasspath refid="project-typingpractice.module.bootclasspath"/>
+      <classpath refid="project-typingpractice.module.classpath"/>
+      <src refid="project-typingpractice.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.project-typingpractice"/>
+    </javac2>
+    
+    <copy todir="${project-typingpractice.testoutput.dir}">
+      <fileset dir="${module.project-typingpractice.basedir}/../src/tests">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.project-typingpractice" description="cleanup module">
+    <delete dir="${project-typingpractice.output.dir}"/>
+    <delete dir="${project-typingpractice.testoutput.dir}"/>
+  </target>
+</project>

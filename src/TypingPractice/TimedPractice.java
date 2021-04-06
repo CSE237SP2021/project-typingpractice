@@ -136,6 +136,7 @@ public class TimedPractice extends GameMode {
 
         File myObj = new File("src/resources/practice" + word_set + ".txt");
 
+
         Scanner myReader = new Scanner(myObj);
         String line = "";
         ArrayList<String> words = new ArrayList<String>();
@@ -147,7 +148,6 @@ public class TimedPractice extends GameMode {
         }
         return words;
     }
-
     
     public float getGameLength() {
     	return this.gameLength;

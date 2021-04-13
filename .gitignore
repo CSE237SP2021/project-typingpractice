@@ -1,3 +1,4 @@
 /src/resources/game_reports/
 /.metadata/
-
+/out/*
+/bin/*

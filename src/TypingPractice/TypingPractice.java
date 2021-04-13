@@ -110,11 +110,11 @@ public class TypingPractice {
         if (s > 0 || s <= files.length){
             File gameFile = files[s-1];
 
-            TimedPractice e = null;
+            Object e = null;
             try {
                 FileInputStream fileIn = new FileInputStream(gameFile.toString());
                 ObjectInputStream inStream = new ObjectInputStream(fileIn);
-                e = (TimedPractice) inStream.readObject();
+                e = inStream.readObject();
                 inStream.close();
                 fileIn.close();
             } catch (IOException i) {
@@ -125,13 +125,23 @@ public class TypingPractice {
                 c.printStackTrace();
                 return;
             }
-
-            System.out.println();
-            System.out.println("Game Report:");
-            System.out.println("Name: " + e.username);
-            System.out.println("Game Length: " + e.gameLength);
-            System.out.println("Number of correct words: " + e.correctWords.length);
-            System.out.println("Number of incorrect words: " + e.incorrectWords.length);
+            
+            
+            // Checks what type of object the saved game was and casts to the correct type
+            if (e instanceof TimedPractice) {
+            	TimedPractice tp = (TimedPractice) e;
+            	tp.print();
+            }
+            
+            else if (e instanceof HardPractice) {
+            	HardPractice tp = (HardPractice) e;
+            	tp.print();
+            }
+            
+            else {
+            	System.out.println("Game report failed to load");
+            }
+            
         }
         else {
         	System.out.println("Game report not found");

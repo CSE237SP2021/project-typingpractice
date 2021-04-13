@@ -12,6 +12,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
+/*
+ * Creates a game with a fixed length and prompts users to enter as many words as
+ * they can before time runs out
+ */
 
 
 public class TimedPractice extends GameMode {
@@ -33,7 +37,9 @@ public class TimedPractice extends GameMode {
     
     public void run(){
 
-		try{
+		
+    	//Sets the word set to be used by the player
+    	try{
 			this.words = chooseWordsPrompt();
 		}
 		catch(FileNotFoundException e){
@@ -45,7 +51,9 @@ public class TimedPractice extends GameMode {
 		Scanner in = new Scanner(System.in); 
 		String s = in.nextLine(); 
 		
-        ArrayList<String> correctWordsTemp= new ArrayList<String>();
+        
+		//While the user still has time, track correct and incorrect words
+		ArrayList<String> correctWordsTemp= new ArrayList<String>();
         ArrayList<String> incorrectWordsTemp= new ArrayList<String>();
         long startTime = System.currentTimeMillis();
         for (int i = 0; i < this.words.size(); i++){
@@ -62,6 +70,8 @@ public class TimedPractice extends GameMode {
                 }
             }
         }
+        
+        // Gives a score report and allows the user to save their score 
         this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
         this.incorrectWords = incorrectWordsTemp.toArray(new String[incorrectWordsTemp.size()]);
         System.out.println("Time's up! You got " + correctWordsCounter + " words correct in " + gameLength + " seconds.");
@@ -72,6 +82,11 @@ public class TimedPractice extends GameMode {
         }
         return;
     }
+
+    
+    /* Asks the user if they would like to randomize the words they will use and
+     * retrieves a corresponding set of practice words 
+     */
 
 	public ArrayList<String> chooseWordsPrompt() throws FileNotFoundException{
 		Scanner in = new Scanner(System.in); 
@@ -91,6 +106,8 @@ public class TimedPractice extends GameMode {
         else if (s.equalsIgnoreCase("no")) {
         	try{
                 System.out.println("Enter the number of the word set you would like to use.");
+                System.out.println("1. All Star");
+                System.out.println("2. Never Gonna Give You Up");
         		int i = in.nextInt();
 	            practiceWords = getPracticeWords(i);
 	            this.words = practiceWords;
@@ -111,11 +128,21 @@ public class TimedPractice extends GameMode {
         }
 		return practiceWords;
 	}
+	
+	/*
+	 *  Saves a game report for a timed game. Information included in the report is:
+	 *  	user name
+	 *  	time and date
+	 *  	game length
+	 *  	number of correct words
+	 *  	number of incorrect words
+	 *  Games are saved by serializing an object of TimedPractice 
+	 */
 
     public void save(){
         try {
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-HH:mm:ss");
             String strDate = sdf.format(cal.getTime());
             FileOutputStream fileOut =
                     new FileOutputStream("src/resources/game_reports/" + this.username + "-" + strDate);
@@ -131,6 +158,11 @@ public class TimedPractice extends GameMode {
         }
     }
 
+    /* Retrieves a practice set of words from src/resources corresponding to the integer
+     * passed to the function. Practice words are text files with the naming convention:
+     *		practice[int].txt
+     */
+    
     public ArrayList<String> getPracticeWords(int word_set) throws FileNotFoundException {
 
 

@@ -15,7 +15,32 @@ public class TypingPractice {
 
     public static void main(String[] args) {
         TypingPractice typingPractice = new TypingPractice();
-        typingPractice.run();
+        boolean quit = false;
+        while (!quit) {
+        	typingPractice.display();
+            Scanner in = new Scanner(System.in);
+            System.out.println("What would you like to do?");
+            String input = in.nextLine();
+            if (input.equalsIgnoreCase("quit")) {
+                quit = true;
+                return;
+            } else if (input.equalsIgnoreCase("Custom")) {
+                GameMode game = new TimedPractice(typingPractice.username, typingPractice.getGameLength());
+                game.run();
+            }
+            else if (input.equalsIgnoreCase("1 Minute")) {
+                GameMode game = new TimedPractice(typingPractice.username, 60);
+                game.run();
+            }
+            else if (input.equalsIgnoreCase("3 Minute")) {
+                GameMode game = new TimedPractice(typingPractice.username, 180);
+                game.run();
+            }
+            else if (input.equalsIgnoreCase("View Previous Scores")) {
+            	typingPractice.retrieveGame();
+            }
+        }
+        System.out.println("Thanks for playing.");
     }
 
     public TypingPractice(){
@@ -23,7 +48,9 @@ public class TypingPractice {
         this.username = getUser();
     }
 
-    //Add new menu items here
+    /*
+     * Keeps track of which items are to be displayed on the menu
+     */
     public String[] getMenu(){
         String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "View Previous Scores", "Quit"};
         return mainMenu;
@@ -38,7 +65,9 @@ public class TypingPractice {
 
 
 
-    // Creates the menu that allows the user to select their game mode.
+    /* 
+     * Creates the menu that allows the user to select their game mode or quit the game.
+     */
     public void display(){
         System.out.println();
         System.out.println("----------------------------------------------");
@@ -58,34 +87,10 @@ public class TypingPractice {
 
     }
 
-    public void run(){
-        boolean quit = false;
-        while (!quit) {
-            display();
-            Scanner in = new Scanner(System.in);
-            System.out.println("What would you like to do?");
-            String input = in.nextLine();
-            if (input.equalsIgnoreCase("quit")) {
-                quit = true;
-                return;
-            } else if (input.equalsIgnoreCase("Custom")) {
-                GameMode game = new TimedPractice(this.username, getGameLength());
-                game.run();
-            }
-            else if (input.equalsIgnoreCase("1 Minute")) {
-                GameMode game = new TimedPractice(this.username, 60);
-                game.run();
-            }
-            else if (input.equalsIgnoreCase("3 Minute")) {
-                GameMode game = new TimedPractice(this.username, 180);
-                game.run();
-            }
-            else if (input.equalsIgnoreCase("View Previous Scores")) {
-                retrieveGame();
-            }
-        }
-        System.out.println("Thanks for playing.");
-    }
+    /*
+     * Deserializes the saved game report object corresponding to the time and 
+     * date chosen by the user and then displays the information to the console
+     */
 
     public void retrieveGame(){
 
@@ -122,6 +127,9 @@ public class TypingPractice {
             System.out.println("Game Length: " + e.gameLength);
             System.out.println("Number of correct words: " + e.correctWords.length);
             System.out.println("Number of incorrect words: " + e.incorrectWords.length);
+        }
+        else {
+        	System.out.println("Game report not found");
         }
     }
 

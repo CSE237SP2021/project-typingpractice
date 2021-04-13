@@ -28,6 +28,11 @@ public class TypingPractice {
                 GameMode game = new TimedPractice(typingPractice.username, typingPractice.getGameLength());
                 game.run();
             }
+            else if (input.equalsIgnoreCase("Hard")) {
+                float intervalLength = 5;
+            	GameMode game = new HardPractice(typingPractice.username, intervalLength);
+                game.run();
+            }
             else if (input.equalsIgnoreCase("1 Minute")) {
                 GameMode game = new TimedPractice(typingPractice.username, 60);
                 game.run();
@@ -52,7 +57,7 @@ public class TypingPractice {
      * Keeps track of which items are to be displayed on the menu
      */
     public String[] getMenu(){
-        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "View Previous Scores", "Quit"};
+        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "Hard", "View Previous Scores", "Quit"};
         return mainMenu;
     }
 
@@ -88,7 +93,7 @@ public class TypingPractice {
     }
 
     /*
-     * Deserializes the saved game report object corresponding to the time and 
+     * Deserialize the saved game report object corresponding to the time and 
      * date chosen by the user and then displays the information to the console
      */
 

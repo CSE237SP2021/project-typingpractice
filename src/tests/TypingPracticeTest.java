@@ -6,6 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
+
+import TypingPractice.TimedPractice;
 import TypingPractice.TypingPractice;
 
 class TypingPracticeTest {
@@ -37,7 +39,7 @@ class TypingPracticeTest {
     	
     	TypingPractice typingPractice = new TypingPractice();
     	
-        assertEquals(typingPractice.menu.length, 5);
+        assertEquals(typingPractice.menu.length, 6);
     }
     
     @Test
@@ -50,6 +52,20 @@ class TypingPracticeTest {
     	TypingPractice typingPractice = new TypingPractice();
     	
         assertEquals(typingPractice.username, "e");
+    }
+    
+    
+    @Test
+    void testQuit () {
+        System.setOut(new PrintStream(outContent));
+        
+        String input = "quit\nquit\nquit\n";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+		
+    	TypingPractice typingPractice = new TypingPractice("e");
+    	
+    	
+        assertEquals(typingPractice.getMenu()[5], "Quit");
     }
     
 

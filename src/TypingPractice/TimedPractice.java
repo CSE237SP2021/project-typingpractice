@@ -184,6 +184,16 @@ public class TimedPractice extends GameMode {
     public float getGameLength() {
     	return this.gameLength;
     }
+    
+    public void print() {
+    	System.out.println();
+        System.out.println("GAME REPORT:");
+        System.out.println("Name: " + this.username);
+        System.out.print("Game mode: timed game");
+        System.out.println("Game Length: " + this.gameLength);
+        System.out.println("Number of correct words: " + this.correctWords.length);
+        System.out.println("Number of incorrect words: " + this.incorrectWords.length);
+    }
 
 }
 

@@ -13,6 +13,9 @@ public class TypingPractice {
     public String username;
 
 
+    /*
+     * Reads user input and selects the appropriate matching game mode or quits
+     */
     public static void main(String[] args) {
         TypingPractice typingPractice = new TypingPractice();
         boolean quit = false;
@@ -23,6 +26,7 @@ public class TypingPractice {
             String input = in.nextLine();
             if (input.equalsIgnoreCase("quit")) {
                 quit = true;
+                System.out.println("Thanks for playing.");
                 return;
             } else if (input.equalsIgnoreCase("Custom")) {
                 GameMode game = new TimedPractice(typingPractice.username, typingPractice.getGameLength());
@@ -45,12 +49,16 @@ public class TypingPractice {
             	typingPractice.retrieveGame();
             }
         }
-        System.out.println("Thanks for playing.");
     }
 
     public TypingPractice(){
         this.menu = getMenu();
         this.username = getUser();
+    }
+    
+    public TypingPractice(String name){
+        this.menu = getMenu();
+        this.username = name;
     }
 
     /*
@@ -93,8 +101,10 @@ public class TypingPractice {
     }
 
     /*
-     * Deserialize the saved game report object corresponding to the time and 
-     * date chosen by the user and then displays the information to the console
+     * Deserializes the saved game report object corresponding to the time and 
+     * date chosen by the user and then displays the information to the console.
+     * The method retrieves the game as an object then checks what class it is an instance 
+     * of and casts it. Then the game's print() method is called to display the game report.
      */
 
     public void retrieveGame(){
@@ -110,11 +120,11 @@ public class TypingPractice {
         if (s > 0 || s <= files.length){
             File gameFile = files[s-1];
 
-            TimedPractice e = null;
+            Object e = null;
             try {
                 FileInputStream fileIn = new FileInputStream(gameFile.toString());
                 ObjectInputStream inStream = new ObjectInputStream(fileIn);
-                e = (TimedPractice) inStream.readObject();
+                e = inStream.readObject();
                 inStream.close();
                 fileIn.close();
             } catch (IOException i) {
@@ -125,19 +135,30 @@ public class TypingPractice {
                 c.printStackTrace();
                 return;
             }
-
-            System.out.println();
-            System.out.println("Game Report:");
-            System.out.println("Name: " + e.username);
-            System.out.println("Game Length: " + e.gameLength);
-            System.out.println("Number of correct words: " + e.correctWords.length);
-            System.out.println("Number of incorrect words: " + e.incorrectWords.length);
+            
+            
+            // Checks what type of object the saved game was and casts to the correct type
+            if (e instanceof TimedPractice) {
+            	TimedPractice tp = (TimedPractice) e;
+            	tp.print();
+            }
+            
+            else if (e instanceof HardPractice) {
+            	HardPractice tp = (HardPractice) e;
+            	tp.print();
+            }
+            
+            else {
+            	System.out.println("Game report failed to load");
+            }
+            
         }
         else {
         	System.out.println("Game report not found");
         }
     }
 
+    
     public float getGameLength(){
         float s = 0;
         while (s <= 0 || s > 120){

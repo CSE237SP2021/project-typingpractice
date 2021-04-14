@@ -17,9 +17,7 @@ import java.io.ObjectInputStream;
 public class HardPractice extends GameMode{
 	
 	
-//	  private static final long serialVersionUID = 6529685098447757690L;
 	    public String username;
-	    public float gameLength;
 	    public float wordTimer;
 	    ArrayList<String> words;
 	    int correctWordsCounter = 0;
@@ -125,50 +123,17 @@ public class HardPractice extends GameMode{
 	        }
 	        return words;
 	    }
+	   
 	    
-	    public float getGameLength() {
-	    	return this.gameLength;
-	    }
 	    
-	    public void retrieveGame(){
-
-	        File dir = new File("src/resources/game_reports/");
-	        File[] files = dir.listFiles((dir1, name) -> name.startsWith(username+"-"));
-	        for (int i = 0; i < files.length; i++){
-	            System.out.println(i+1 + ".    " + files[i].getName());
-	        }
-	        Scanner in = new Scanner(System.in);
-	        System.out.println("Which game report would you like to view?");
-	        int s = in.nextInt();
-	        if (s > 0 || s <= files.length){
-	            File gameFile = files[s-1];
-
-	            TimedPractice e = null;
-	            try {
-	                FileInputStream fileIn = new FileInputStream(gameFile.toString());
-	                ObjectInputStream inStream = new ObjectInputStream(fileIn);
-	                e = (TimedPractice) inStream.readObject();
-	                inStream.close();
-	                fileIn.close();
-	            } catch (IOException i) {
-	                i.printStackTrace();
-	                return;
-	            } catch (ClassNotFoundException c) {
-	                System.out.println("Game not found");
-	                c.printStackTrace();
-	                return;
-	            }
-
-	            System.out.println();
-	            System.out.println("Game Report:");
-	            System.out.println("Name: " + e.username);
-	            System.out.println("Game Length: " + e.gameLength);
-	            System.out.println("Number of correct words: " + e.correctWords.length);
-	            System.out.println("Number of incorrect words: " + e.incorrectWords.length);
-	        }
-	        else {
-	        	System.out.println("Game report not found");
-	        }
+	    public void print() {
+            System.out.println();
+            System.out.println("GAME REPORT:");
+            System.out.println("Name: " + this.username);
+            System.out.print("Game mode: hard");
+            System.out.println("Time allowed per word: " + this.wordTimer);
+            System.out.println("Number of correct words: " + this.correctWords.length);
+            System.out.println("Game ended on the word: " + this.incorrectWord);
 	    }
 
 

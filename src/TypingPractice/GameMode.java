@@ -20,5 +20,7 @@ public abstract class GameMode implements Serializable{
     }
 
     public abstract void run();
+    
+    public abstract void print();
 
 }

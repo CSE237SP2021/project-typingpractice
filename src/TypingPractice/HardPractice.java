@@ -17,7 +17,6 @@ import java.io.ObjectInputStream;
 public class HardPractice extends GameMode{
 	
 	
-//	  private static final long serialVersionUID = 6529685098447757690L;
 	    public String username;
 	    public float wordTimer;
 	    ArrayList<String> words;

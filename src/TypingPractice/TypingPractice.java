@@ -32,6 +32,9 @@ public class TypingPractice {
                 GameMode game = new TimedPractice(typingPractice.username, typingPractice.getGameLength());
                 game.run();
             }
+            else if (input.equalsIgnoreCase("Log Out")) {
+            	continue;
+            }
             else if (input.equalsIgnoreCase("Hard")) {
                 float intervalLength = 5;
             	GameMode game = new HardPractice(typingPractice.username, intervalLength);
@@ -65,7 +68,7 @@ public class TypingPractice {
      * Keeps track of which items are to be displayed on the menu
      */
     public String[] getMenu(){
-        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "Hard", "View Previous Scores", "Quit"};
+        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "Hard", "View Previous Scores", "Log Out","Quit"};
         return mainMenu;
     }
 

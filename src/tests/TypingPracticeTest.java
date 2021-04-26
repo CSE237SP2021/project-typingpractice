@@ -34,7 +34,7 @@ class TypingPracticeTest {
 	
 	@Test
     void testMenuLength(){
-        assertEquals(typingPractice.menu.length, 6);
+        assertEquals(typingPractice.menu.length, 7);
     }
     
     @Test
@@ -45,7 +45,7 @@ class TypingPracticeTest {
     
     @Test
     void testQuit () {    	
-        assertEquals(typingPractice.getMenu()[5], "Quit");
+        assertEquals(typingPractice.getMenu()[6], "Quit");
     }
     
 

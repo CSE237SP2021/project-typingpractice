@@ -27,13 +27,15 @@ public class TypingPractice {
             if (input.equalsIgnoreCase("quit")) {
                 quit = true;
                 System.out.println("Thanks for playing.");
-                return;
             } else if (input.equalsIgnoreCase("Custom")) {
                 GameMode game = new TimedPractice(typingPractice.username, typingPractice.getGameLength());
                 game.run();
             }
             else if (input.equalsIgnoreCase("Log Out")) {
-            	continue;
+            	if(typingPractice.logOut()) {
+            		quit = true;
+            	}
+            	
             }
             else if (input.equalsIgnoreCase("Hard")) {
                 float intervalLength = 5;
@@ -171,5 +173,26 @@ public class TypingPractice {
         }
         return s;
     }
+    
+   
+    //Logs out the current user and prompts them to enter a new user name
+    public boolean logOut() {
+        Scanner in = new Scanner(System.in);
+    	System.out.println("You have been logged out. Enter a new user name to log back in or "
+    			+ "'quit' if you wish to stop playing");
+    	String response = in.nextLine();
+    	if (response.equalsIgnoreCase("quit")) {
+            System.out.println("Thanks for playing.");
+    		return true;
+    	}
+    	else {
+            System.out.println("You are now logged in as: " + response);
+    		this.username = response;
+    	}
+    	return false;
+    }
 
+    
+    
+    
 }

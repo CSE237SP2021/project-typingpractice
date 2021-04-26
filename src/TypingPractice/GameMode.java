@@ -12,7 +12,10 @@ public abstract class GameMode implements Serializable{
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4567723656720246398L;
+	/**
+	 * 
+	 */
 	public String username;
 
     public GameMode(String n){

@@ -5,66 +5,46 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import TypingPractice.TimedPractice;
 import TypingPractice.TypingPractice;
 
 class TypingPracticeTest {
 
-	private PrintStream sysOut;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private String username = "e";
+    private TypingPractice typingPractice;
    
+    
+    @BeforeEach 
+    void setOutput() {
+        System.setOut(new PrintStream(outContent));
+        System.setIn(new ByteArrayInputStream(username.getBytes()));
+    	typingPractice = new TypingPractice();
+    }
     
     
 	@Test
     void testUsernamePrompt(){
-        System.setOut(new PrintStream(outContent));
-        
-        String input = "e";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-		
-    	TypingPractice typingPractice = new TypingPractice();
-    	
         assertEquals(outContent.toString(), "Please enter your current or desired username\n");
     }
 	
 	
 	@Test
     void testMenuLength(){
-
-        String input = "e";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-    	
-    	TypingPractice typingPractice = new TypingPractice();
-    	
         assertEquals(typingPractice.menu.length, 6);
     }
     
     @Test
-    void testTypingPracticeUsername(){
-
-        String input = "e";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-    	
-    	TypingPractice typingPractice = new TypingPractice();
-    	
-        assertEquals(typingPractice.username, "e");
+    void testTypingPracticeUsername(){    	
+        assertEquals(typingPractice.username, username);
     }
     
     
     @Test
-    void testQuit () {
-        System.setOut(new PrintStream(outContent));
-        
-        String input = "quit\nquit\nquit\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-		
-    	TypingPractice typingPractice = new TypingPractice("e");
-    	
-    	
+    void testQuit () {    	
         assertEquals(typingPractice.getMenu()[5], "Quit");
     }
     

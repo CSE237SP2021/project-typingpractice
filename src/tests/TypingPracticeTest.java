@@ -48,6 +48,23 @@ class TypingPracticeTest {
         assertEquals(typingPractice.getMenu()[6], "Quit");
     }
     
+    @Test
+    void testLogOutNewUser() { 
+    	String newUsername = "b";
+    	System.setIn(new ByteArrayInputStream(newUsername.getBytes()));
+        typingPractice.logOut();
+        assertEquals(typingPractice.username, newUsername);
+
+    }
+    
+    @Test
+    void testLogOutQuit() { 
+    	String newUsername = "quit";
+    	System.setIn(new ByteArrayInputStream(newUsername.getBytes()));
+        typingPractice.logOut();
+        assertEquals(outContent.toString().split("\n")[2], "Thanks for playing.");
+    }
+    
 
 
 }

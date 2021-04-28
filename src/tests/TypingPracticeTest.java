@@ -57,6 +57,7 @@ class TypingPracticeTest {
 
     }
     
+    
     @Test
     void testLogOutQuit() { 
     	String newUsername = "quit";
@@ -65,6 +66,4 @@ class TypingPracticeTest {
         assertEquals(outContent.toString().split("\n")[2], "Thanks for playing.");
     }
     
-
-
 }

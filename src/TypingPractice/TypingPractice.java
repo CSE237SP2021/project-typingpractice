@@ -11,6 +11,7 @@ public class TypingPractice {
 
     public String[] menu;
     public String username;
+    private HighScores highScores; 
 
 
     /*
@@ -18,6 +19,7 @@ public class TypingPractice {
      */
     public static void main(String[] args) {
         TypingPractice typingPractice = new TypingPractice();
+        typingPractice.highScores = new HighScores();
         boolean quit = false;
         while (!quit) {
         	typingPractice.display();
@@ -41,6 +43,7 @@ public class TypingPractice {
                 float intervalLength = 5;
             	GameMode game = new HardPractice(typingPractice.username, intervalLength);
                 game.run();
+            	typingPractice.highScores.addScore((HardPractice)game);
             }
             else if (input.equalsIgnoreCase("1 Minute")) {
                 GameMode game = new TimedPractice(typingPractice.username, 60);
@@ -50,7 +53,10 @@ public class TypingPractice {
                 GameMode game = new TimedPractice(typingPractice.username, 180);
                 game.run();
             }
-            else if (input.equalsIgnoreCase("View Previous Scores")) {
+            else if (input.equalsIgnoreCase("View Hard Game High Scores")) {
+            	typingPractice.highScores.print();
+            }
+            else if (input.equalsIgnoreCase("View Personal Scores")) {
             	typingPractice.retrieveGame();
             }
         }
@@ -65,12 +71,34 @@ public class TypingPractice {
         this.menu = getMenu();
         this.username = name;
     }
+    
+    
+    public void loadHighScores(){
+
+       Object e = null;
+       try {
+    	   	File myObj = new File("src/resources/highScores");
+            FileInputStream fileIn = new FileInputStream(myObj);
+            ObjectInputStream inStream = new ObjectInputStream(fileIn);
+            e = inStream.readObject();
+            inStream.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+            return;
+        } catch (ClassNotFoundException c) {
+            System.out.println("Game not found");
+            c.printStackTrace();
+            return;
+        }
+       this.highScores = (HighScores) e; 
+    }
 
     /*
      * Keeps track of which items are to be displayed on the menu
      */
     public String[] getMenu(){
-        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "Hard", "View Previous Scores", "Log Out","Quit"};
+        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "Hard", "View High Scores","View Personal Scores", "Log Out","Quit"};
         return mainMenu;
     }
 

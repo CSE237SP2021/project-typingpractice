@@ -23,6 +23,7 @@ public class HardPractice extends GameMode{
 	    public int correctWordsCounter = 0;
 	    String[] correctWords;
 	    public String incorrectWord;
+	    public String incorrectAnswer;
 
 
 	    public HardPractice(String n, float wt){
@@ -61,7 +62,8 @@ public class HardPractice extends GameMode{
 
                 if (!(s.equals(this.words.get(wordCounter)))){
                     playing = false;
-                    this.incorrectWord = s;
+                    this.incorrectWord = words.get(wordCounter);
+                    this.incorrectAnswer = s;
                     System.out.println("Incorrect word entered");
 
                 }
@@ -72,7 +74,8 @@ public class HardPractice extends GameMode{
                 }
                 else{
                 	playing = false;
-                    this.incorrectWord = s;
+                    this.incorrectWord = words.get(wordCounter);
+                    this.incorrectAnswer = s;
                     System.out.println("You took too long to enter the word");
                 }
                 wordCounter += 1;
@@ -81,9 +84,8 @@ public class HardPractice extends GameMode{
         	
         	this.correctWordsCounter =  this.correctWordsCounter - 1;
 	        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
-	        System.out.println("GAME OVER. You got " + this.correctWordsCounter + " words correct.");
-	        System.out.println("Word interval was " + this.wordTimer + ".");
-	        System.out.println("Enter 'save' to save a report of your score");
+	        print();
+	       
 	        s = in.nextLine(); 
 	        if (s.equalsIgnoreCase("save")){
 	            save();
@@ -135,12 +137,13 @@ public class HardPractice extends GameMode{
 	    // this method prints the final statistics from the game session
 	    public void print() {
             System.out.println();
-            System.out.println("GAME REPORT:");
+	        System.out.println("GAME REPORT:");
             System.out.println("Name: " + this.username);
             System.out.println("Game mode: hard");
             System.out.println("Time allowed per word: " + this.wordTimer);
-            System.out.println("Number of correct words: " + this.correctWords.length);
+            System.out.println("Number of correct words: " + this.correctWordsCounter);
             System.out.println("Game ended on the word: " + this.incorrectWord);
+            System.out.println("You spelled the word: " + this.incorrectAnswer);
 	    }
 
 

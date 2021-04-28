@@ -57,6 +57,7 @@ class TypingPracticeTest {
 
     }
     
+    
     @Test
     void testLogOutQuit() { 
     	String newUsername = "quit";

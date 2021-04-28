@@ -24,7 +24,7 @@ Everything should work besides the tests for the hard game mode which we will ad
  - User is able to view highest scores for each game mode
  - User can revisit previous game reports
  - User can log in and out of an account
- - fixed tests
+ - Fixed tests and cleaned up code
 
 ### Is there anything that you implemented but doesn't currently work?
  - N/A

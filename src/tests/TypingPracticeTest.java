@@ -34,6 +34,12 @@ class TypingPracticeTest {
 	
 	@Test
     void testMenuLength(){
+
+        String input = "e";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+    	
+    	  TypingPractice typingPractice = new TypingPractice();
+    	
         assertEquals(typingPractice.menu.length, 7);
     }
     

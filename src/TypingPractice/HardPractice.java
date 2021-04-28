@@ -20,9 +20,9 @@ public class HardPractice extends GameMode{
 	    public String username;
 	    public float wordTimer;
 	    ArrayList<String> words;
-	    int correctWordsCounter = 0;
+	    public int correctWordsCounter = 0;
 	    String[] correctWords;
-	    String incorrectWord;
+	    public String incorrectWord;
 
 
 	    public HardPractice(String n, float wt){
@@ -31,6 +31,9 @@ public class HardPractice extends GameMode{
 	        this.wordTimer = wt;
 	    }
 	    
+	    
+	    // this function is what  the hard game mode operates from. within this function,
+	    //  user is given a certain amount of time to enter each word and if a word is entered incorrectly, game is over
 	    public void run(){
 
 			try{
@@ -64,7 +67,7 @@ public class HardPractice extends GameMode{
                 }
                
                 if (System.currentTimeMillis() - startTime < 1000*this.wordTimer){
-                    correctWordsCounter++;
+                    this.correctWordsCounter++;
                     correctWordsTemp.add(s);
                 }
                 else{
@@ -73,10 +76,12 @@ public class HardPractice extends GameMode{
                     System.out.println("You took too long to enter the word");
                 }
                 wordCounter += 1;
+               
         	}
-
+        	
+        	this.correctWordsCounter =  this.correctWordsCounter - 1;
 	        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
-	        System.out.println("GAME OVER. You got " + correctWordsCounter + " words correct.");
+	        System.out.println("GAME OVER. You got " + this.correctWordsCounter + " words correct.");
 	        System.out.println("Word interval was " + this.wordTimer + ".");
 	        System.out.println("Enter 'save' to save a report of your score");
 	        s = in.nextLine(); 
@@ -86,7 +91,7 @@ public class HardPractice extends GameMode{
 	        return;
     	}
 
-
+	    // this functions saves the game session under users previously entered user name so that the user can recall old sessions and assess progression
 	    private void save(){
 	        try {
 	            Calendar cal = Calendar.getInstance();
@@ -105,7 +110,9 @@ public class HardPractice extends GameMode{
 	            i.printStackTrace();
 	        }
 	    }
-
+	    
+	    // this function pulls words from  the HardPractice.txt file for use in the hard game mode
+	    // adds words to the array of words to be pulled from in run function
 	    public ArrayList<String> getPracticeWords() throws FileNotFoundException {
 
 
@@ -123,9 +130,9 @@ public class HardPractice extends GameMode{
 	        }
 	        return words;
 	    }
-	   
+
 	    
-	    
+	    // this method prints the final statistics from the game session
 	    public void print() {
             System.out.println();
             System.out.println("GAME REPORT:");

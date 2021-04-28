@@ -185,6 +185,8 @@ public class TimedPractice extends GameMode {
     	return this.gameLength;
     }
     
+    
+    
     public void print() {
     	System.out.println();
         System.out.println("GAME REPORT:");

@@ -36,8 +36,7 @@ public class TimedPractice extends GameMode {
     }
     
     public void run(){
-
-		
+	
     	//Sets the word set to be used by the player
     	try{
 			this.words = chooseWordsPrompt();
@@ -56,7 +55,27 @@ public class TimedPractice extends GameMode {
 		ArrayList<String> correctWordsTemp= new ArrayList<String>();
         ArrayList<String> incorrectWordsTemp= new ArrayList<String>();
         long startTime = System.currentTimeMillis();
-        for (int i = 0; i < this.words.size(); i++){
+        processWords(in, correctWordsTemp, incorrectWordsTemp, startTime);
+        
+        // Gives a score report and allows the user to save their score 
+        correctWordsCounter--;     
+        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
+        this.incorrectWords = incorrectWordsTemp.toArray(new String[incorrectWordsTemp.size()]);
+        this.print();
+        s = in.nextLine(); 
+        if (s.equalsIgnoreCase("save")){
+            save();
+        }
+        return;
+    }
+
+	
+    //Called by the run method, processWords() checks whether the game is still running and there are more words
+    //and processes the user input and updates all class member variables accordingly 
+    private void processWords(Scanner in, ArrayList<String> correctWordsTemp, ArrayList<String> incorrectWordsTemp,
+			long startTime) {
+		String s;
+		for (int i = 0; i < this.words.size(); i++){
             if (System.currentTimeMillis() - startTime < 1000*this.gameLength)
             {
                 System.out.println(this.words.get(i));
@@ -70,19 +89,7 @@ public class TimedPractice extends GameMode {
                 }
             }
         }
-        
-        // Gives a score report and allows the user to save their score 
-        correctWordsCounter--;     
-        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
-        this.incorrectWords = incorrectWordsTemp.toArray(new String[incorrectWordsTemp.size()]);
-        System.out.println("Time's up! You got " + correctWordsCounter + " words correct in " + gameLength + " seconds.");
-        System.out.println("Enter 'save' to save a report of your score");
-        s = in.nextLine(); 
-        if (s.equalsIgnoreCase("save")){
-            save();
-        }
-        return;
-    }
+	}
 
     
     /* Asks the user if they would like to randomize the words they will use and

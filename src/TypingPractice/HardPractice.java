@@ -23,6 +23,8 @@ public class HardPractice extends GameMode{
 	    public int correctWordsCounter = 0;
 	    String[] correctWords;
 	    public String incorrectWord;
+	    public String incorrectAnswer;
+        ArrayList<String> correctWordsTemp= new ArrayList<String>();
 
 
 	    public HardPractice(String n, float wt){
@@ -46,12 +48,25 @@ public class HardPractice extends GameMode{
 			System.out.println("INSTRUCTIONS: type each word that appears in the console exactly and press enter when finished. Work as quickly and accurately as possible. " +
 	                "Continue working until the time is up. \nPress ENTER when you are ready to begin.");
 			Scanner in = new Scanner(System.in); 
-			String s = in.nextLine(); 
-			
-	        ArrayList<String> correctWordsTemp= new ArrayList<String>();
+			String s = in.nextLine(); 	        
 	        
-	        
-	        boolean playing = true;
+	        playWhileCorrect(in);
+        	
+        	this.correctWordsCounter =  this.correctWordsCounter - 1;
+	        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
+	        print();
+	       
+	        s = in.nextLine(); 
+	        if (s.equalsIgnoreCase("save")){
+	            save();
+	        }
+	        return;
+    	}
+
+	    //this method provides the parameters for a hard game, where user is timed on each word and game will stop if user enters the word wrong or time elapses.
+		private void playWhileCorrect(Scanner in) {
+			String s;
+			boolean playing = true;
 	        int wordCounter = 0;
 	        
         	while (playing) {
@@ -61,7 +76,8 @@ public class HardPractice extends GameMode{
 
                 if (!(s.equals(this.words.get(wordCounter)))){
                     playing = false;
-                    this.incorrectWord = s;
+                    this.incorrectWord = words.get(wordCounter);
+                    this.incorrectAnswer = s;
                     System.out.println("Incorrect word entered");
 
                 }
@@ -72,25 +88,17 @@ public class HardPractice extends GameMode{
                 }
                 else{
                 	playing = false;
-                    this.incorrectWord = s;
+                    this.incorrectWord = words.get(wordCounter);
+                    this.incorrectAnswer = s;
                     System.out.println("You took too long to enter the word");
                 }
                 wordCounter += 1;
                
         	}
-        	
-        	this.correctWordsCounter =  this.correctWordsCounter - 1;
-	        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
-	        System.out.println("GAME OVER. You got " + this.correctWordsCounter + " words correct.");
-	        System.out.println("Word interval was " + this.wordTimer + ".");
-	        System.out.println("Enter 'save' to save a report of your score");
-	        s = in.nextLine(); 
-	        if (s.equalsIgnoreCase("save")){
-	            save();
-	        }
-	        return;
-    	}
+		}
 
+	    
+	    
 	    // this functions saves the game session under users previously entered user name so that the user can recall old sessions and assess progression
 	    private void save(){
 	        try {
@@ -135,12 +143,13 @@ public class HardPractice extends GameMode{
 	    // this method prints the final statistics from the game session
 	    public void print() {
             System.out.println();
-            System.out.println("GAME REPORT:");
+	        System.out.println("GAME REPORT:");
             System.out.println("Name: " + this.username);
             System.out.println("Game mode: hard");
             System.out.println("Time allowed per word: " + this.wordTimer);
-            System.out.println("Number of correct words: " + this.correctWords.length);
+            System.out.println("Number of correct words: " + this.correctWordsCounter);
             System.out.println("Game ended on the word: " + this.incorrectWord);
+            System.out.println("You spelled the word: " + this.incorrectAnswer);
 	    }
 
 

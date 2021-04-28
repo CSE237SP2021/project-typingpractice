@@ -13,6 +13,9 @@ public class TypingPractice {
     public String username;
 
 
+    /*
+     * Reads user input and selects the appropriate matching game mode or quits
+     */
     public static void main(String[] args) {
         TypingPractice typingPractice = new TypingPractice();
         boolean quit = false;
@@ -23,10 +26,16 @@ public class TypingPractice {
             String input = in.nextLine();
             if (input.equalsIgnoreCase("quit")) {
                 quit = true;
-                return;
+                System.out.println("Thanks for playing.");
             } else if (input.equalsIgnoreCase("Custom")) {
                 GameMode game = new TimedPractice(typingPractice.username, typingPractice.getGameLength());
                 game.run();
+            }
+            else if (input.equalsIgnoreCase("Log Out")) {
+            	if(typingPractice.logOut()) {
+            		quit = true;
+            	}
+            	
             }
             else if (input.equalsIgnoreCase("Hard")) {
                 float intervalLength = 5;
@@ -45,19 +54,23 @@ public class TypingPractice {
             	typingPractice.retrieveGame();
             }
         }
-        System.out.println("Thanks for playing.");
     }
 
     public TypingPractice(){
         this.menu = getMenu();
         this.username = getUser();
     }
+    
+    public TypingPractice(String name){
+        this.menu = getMenu();
+        this.username = name;
+    }
 
     /*
      * Keeps track of which items are to be displayed on the menu
      */
     public String[] getMenu(){
-        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "Hard", "View Previous Scores", "Quit"};
+        String[] mainMenu = {"1 Minute", "3 Minutes", "Custom", "Hard", "View Previous Scores", "Log Out","Quit"};
         return mainMenu;
     }
 
@@ -93,8 +106,10 @@ public class TypingPractice {
     }
 
     /*
-     * Deserialize the saved game report object corresponding to the time and 
-     * date chosen by the user and then displays the information to the console
+     * Deserializes the saved game report object corresponding to the time and 
+     * date chosen by the user and then displays the information to the console.
+     * The method retrieves the game as an object then checks what class it is an instance 
+     * of and casts it. Then the game's print() method is called to display the game report.
      */
 
     public void retrieveGame(){
@@ -148,6 +163,7 @@ public class TypingPractice {
         }
     }
 
+    
     public float getGameLength(){
         float s = 0;
         while (s <= 0 || s > 120){
@@ -157,5 +173,26 @@ public class TypingPractice {
         }
         return s;
     }
+    
+   
+    //Logs out the current user and prompts them to enter a new user name
+    public boolean logOut() {
+        Scanner in = new Scanner(System.in);
+    	System.out.println("You have been logged out. Enter a new user name to log back in or "
+    			+ "'quit' if you wish to stop playing");
+    	String response = in.nextLine();
+    	if (response.equalsIgnoreCase("quit")) {
+            System.out.println("Thanks for playing.");
+    		return true;
+    	}
+    	else {
+            System.out.println("You are now logged in as: " + response);
+    		this.username = response;
+    	}
+    	return false;
+    }
 
+    
+    
+    
 }

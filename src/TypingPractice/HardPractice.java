@@ -95,7 +95,7 @@ public class HardPractice extends GameMode{
 	    private void save(){
 	        try {
 	            Calendar cal = Calendar.getInstance();
-	            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy-HH:mm:ss");
+	            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-HH:mm:ss");
 	            String strDate = sdf.format(cal.getTime());
 	            FileOutputStream fileOut =
 	                    new FileOutputStream("src/resources/game_reports/" + this.username + "-" + strDate);
@@ -137,7 +137,7 @@ public class HardPractice extends GameMode{
             System.out.println();
             System.out.println("GAME REPORT:");
             System.out.println("Name: " + this.username);
-            System.out.print("Game mode: hard");
+            System.out.println("Game mode: hard");
             System.out.println("Time allowed per word: " + this.wordTimer);
             System.out.println("Number of correct words: " + this.correctWords.length);
             System.out.println("Game ended on the word: " + this.incorrectWord);

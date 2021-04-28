@@ -9,7 +9,14 @@ import java.io.Serializable;
 
 public abstract class GameMode implements Serializable{
 
-    public String username;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4567723656720246398L;
+	/**
+	 * 
+	 */
+	public String username;
 
     public GameMode(String n){
         this.username = n;
@@ -20,5 +27,7 @@ public abstract class GameMode implements Serializable{
     }
 
     public abstract void run();
+    
+    public abstract void print();
 
 }

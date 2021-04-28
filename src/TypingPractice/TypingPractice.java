@@ -53,7 +53,7 @@ public class TypingPractice {
                 GameMode game = new TimedPractice(typingPractice.username, 180);
                 game.run();
             }
-            else if (input.equalsIgnoreCase("View High Scores")) {
+            else if (input.equalsIgnoreCase("View Hard Game High Scores")) {
             	typingPractice.highScores.print();
             }
             else if (input.equalsIgnoreCase("View Personal Scores")) {

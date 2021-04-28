@@ -16,8 +16,15 @@ public class HighScores implements Serializable{
 	}
 	
 	public void print() {
-		for (int i=0; i < this.highScores.size(); i++) {
-			System.out.println((i+1) + ".   " +this.highScores.get(i).getName() + "    " + this.highScores.get(i).correctWordsCounter);
+		if (this.highScores.size() > 0) {
+			System.out.println("High Scores for Hard Game Mode:");
+	        System.out.println("----------------------------------------------");
+			for (int i=0; i < this.highScores.size(); i++) {
+				System.out.println((i+1) + ".   " +this.highScores.get(i).getName() + "    " + this.highScores.get(i).correctWordsCounter);
+			}
+		}
+		else {
+			System.out.println("No High Scores Currently Saved");
 		}
 	}
 	
@@ -33,6 +40,7 @@ public class HighScores implements Serializable{
 			}
 			if (!added) {
 				this.highScores.add(game);
+				added = true;
 			}
 		}
 		else {
@@ -57,7 +65,6 @@ public class HighScores implements Serializable{
 	        out.writeObject(this);
 	        out.close();
 	        fileOut.close();
-	        System.out.printf("High Score Saved!");
     	} catch (IOException i) {
     		i.printStackTrace();
     	}

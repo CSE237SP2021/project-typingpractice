@@ -3,6 +3,7 @@ package TypingPractice;
 import java.util.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 
@@ -19,7 +20,7 @@ public class TypingPractice {
      */
     public static void main(String[] args) {
         TypingPractice typingPractice = new TypingPractice();
-        typingPractice.highScores = new HighScores();
+        typingPractice.highScores = loadHighScores();
         boolean quit = false;
         while (!quit) {
         	typingPractice.display();
@@ -53,7 +54,7 @@ public class TypingPractice {
                 GameMode game = new TimedPractice(typingPractice.username, 180);
                 game.run();
             }
-            else if (input.equalsIgnoreCase("View Hard Game High Scores")) {
+            else if (input.equalsIgnoreCase("View High Scores")) {
             	typingPractice.highScores.print();
             }
             else if (input.equalsIgnoreCase("View Personal Scores")) {
@@ -73,7 +74,7 @@ public class TypingPractice {
     }
     
     
-    public void loadHighScores(){
+    public static HighScores loadHighScores(){
 
        Object e = null;
        try {
@@ -83,15 +84,15 @@ public class TypingPractice {
             e = inStream.readObject();
             inStream.close();
             fileIn.close();
-        } catch (IOException i) {
+       	} catch (IOException i) {
             i.printStackTrace();
-            return;
+            return new HighScores();
         } catch (ClassNotFoundException c) {
             System.out.println("Game not found");
             c.printStackTrace();
-            return;
+            return new HighScores();
         }
-       this.highScores = (HighScores) e; 
+       return (HighScores) e; 
     }
 
     /*

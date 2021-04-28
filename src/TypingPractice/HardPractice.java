@@ -24,6 +24,7 @@ public class HardPractice extends GameMode{
 	    String[] correctWords;
 	    public String incorrectWord;
 	    public String incorrectAnswer;
+        ArrayList<String> correctWordsTemp= new ArrayList<String>();
 
 
 	    public HardPractice(String n, float wt){
@@ -47,12 +48,25 @@ public class HardPractice extends GameMode{
 			System.out.println("INSTRUCTIONS: type each word that appears in the console exactly and press enter when finished. Work as quickly and accurately as possible. " +
 	                "Continue working until the time is up. \nPress ENTER when you are ready to begin.");
 			Scanner in = new Scanner(System.in); 
-			String s = in.nextLine(); 
-			
-	        ArrayList<String> correctWordsTemp= new ArrayList<String>();
+			String s = in.nextLine(); 	        
 	        
-	        
-	        boolean playing = true;
+	        playWhileCorrect(in);
+        	
+        	this.correctWordsCounter =  this.correctWordsCounter - 1;
+	        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
+	        print();
+	       
+	        s = in.nextLine(); 
+	        if (s.equalsIgnoreCase("save")){
+	            save();
+	        }
+	        return;
+    	}
+
+	    //this method provides the parameters for a hard game, where user is timed on each word and game will stop if user enters the word wrong or time elapses.
+		private void playWhileCorrect(Scanner in) {
+			String s;
+			boolean playing = true;
 	        int wordCounter = 0;
 	        
         	while (playing) {
@@ -81,18 +95,10 @@ public class HardPractice extends GameMode{
                 wordCounter += 1;
                
         	}
-        	
-        	this.correctWordsCounter =  this.correctWordsCounter - 1;
-	        this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
-	        print();
-	       
-	        s = in.nextLine(); 
-	        if (s.equalsIgnoreCase("save")){
-	            save();
-	        }
-	        return;
-    	}
+		}
 
+	    
+	    
 	    // this functions saves the game session under users previously entered user name so that the user can recall old sessions and assess progression
 	    private void save(){
 	        try {

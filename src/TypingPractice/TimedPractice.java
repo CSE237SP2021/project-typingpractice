@@ -72,6 +72,7 @@ public class TimedPractice extends GameMode {
         }
         
         // Gives a score report and allows the user to save their score 
+        correctWordsCounter--;     
         this.correctWords = correctWordsTemp.toArray(new String[correctWordsTemp.size()]);
         this.incorrectWords = incorrectWordsTemp.toArray(new String[incorrectWordsTemp.size()]);
         System.out.println("Time's up! You got " + correctWordsCounter + " words correct in " + gameLength + " seconds.");
@@ -184,6 +185,8 @@ public class TimedPractice extends GameMode {
     public float getGameLength() {
     	return this.gameLength;
     }
+    
+    
     
     public void print() {
     	System.out.println();

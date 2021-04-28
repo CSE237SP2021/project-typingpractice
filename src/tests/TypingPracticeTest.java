@@ -66,6 +66,4 @@ class TypingPracticeTest {
         assertEquals(outContent.toString().split("\n")[2], "Thanks for playing.");
     }
     
-
-
 }

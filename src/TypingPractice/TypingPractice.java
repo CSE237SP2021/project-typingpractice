@@ -151,7 +151,11 @@ public class TypingPractice {
         Scanner in = new Scanner(System.in);
         System.out.println("Which game report would you like to view?");
         int s = in.nextInt();
-        if (s > 0 || s <= files.length){
+        getFileFromPromt(files, s);
+    }
+
+	private void getFileFromPromt(File[] files, int s) {
+		if (s > 0 || s <= files.length){
             File gameFile = files[s-1];
 
             Object e = null;
@@ -190,7 +194,7 @@ public class TypingPractice {
         else {
         	System.out.println("Game report not found");
         }
-    }
+	}
 
     
     public float getGameLength(){

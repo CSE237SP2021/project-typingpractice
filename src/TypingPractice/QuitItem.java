@@ -11,4 +11,8 @@ public class QuitItem extends GameMode {
     public QuitItem(String s){
         super(s);
     }
+    
+    public void print() {
+    	System.out.print("Quiting Typing Practice. Thanks for playing!");
+    }
 }

@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-
+import TypingPractice.HardPractice;
 import TypingPractice.TimedPractice;
 import TypingPractice.TypingPractice;
 
@@ -20,43 +20,48 @@ public class HardPracticeTests {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
    
     
-    ///fix to apply to hardPractice mode
 	@Test
-    void testUsernamePrompt(){
-        System.setOut(new PrintStream(outContent));
+    void timeToEnter() {
+		HardPractice game =  new HardPractice("test_user",5);
+		assertEquals(game.wordTimer, 5);
+    }
+	
+	@Test
+    void testHardPracticeUsername(){
+		HardPractice game = new HardPractice("John", 5);
+		assertEquals(game.username, "John");
+	}
+
+	@Test
+    void testWordCounter(){
+		String input = "\nme\nwe\nhe\nshe\nher\nhim\nlet\nnew\nfile\nlol\nkk";
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
         
-        String input = "e";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-		
-    	TypingPractice typingPractice = new TypingPractice();
-    	
-        assertEquals(outContent.toString(), "Please enter your current or desired username\n");
-    }
-	
+        HardPractice game = new HardPractice("test_user", 5);
+        game.run();
+
+        assertEquals(game.correctWordsCounter, 9);
+        
+	}
 	
 	@Test
-    void testMenuLength(){
-
-        String input = "e";
+    void testIncorrectWord(){
+	    String input = "\nme\nwe\nhe\nshe\nher\nhim\nlet\nnew\nfile\nlol";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
+        
+        HardPractice game = new HardPractice("test_user", 5);
+        game.run();
+        
+        assertEquals(game.incorrectWord, "lol");
+	}
+	
+	
+	
 
-    	
-    	TypingPractice typingPractice = new TypingPractice();
-    	
-        assertEquals(typingPractice.menu.length, 5);
-    }
+				
+	
     
-    @Test
-    void testTypingPracticeUsername(){
-
-        String input = "e";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-    	
-    	TypingPractice typingPractice = new TypingPractice();
-    	
-        assertEquals(typingPractice.username, "e");
-    }
+ 
     
 
 }

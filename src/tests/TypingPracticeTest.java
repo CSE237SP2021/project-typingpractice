@@ -33,7 +33,6 @@ class TypingPracticeTest {
 
         String input = "e";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
-
     	
     	TypingPractice typingPractice = new TypingPractice();
     	
